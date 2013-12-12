@@ -445,7 +445,13 @@
 			"http://www.newegg.com/Watches/SubCategory/ID-1015?Tid=10096"];
 
 			function randomize() {
-				document.getElementById('receiveBacon').innerHTML = array[Math.floor(Math.random() * array.length)];
+				var dest = array[Math.floor(Math.random() * array.length)];
+				document.getElementById('receiveBacon').innerHTML = dest;
+				document.getElementById('linker').href = dest;
+			}
+
+			function randomize2() {
+				document.getElementById('linker').href = array[Math.floor(Math.random() * array.length)];
 			}
 
 			function redirect() {
@@ -453,16 +459,16 @@
 					randomize();
 				}
 				var dest = document.getElementById('receiveBacon').innerHTML;
-				window.location.replace(dest);
+				window.location.href=dest;
 			}
 		</script>
 	</head>
-	<body>
+	<body onload="randomize2()">
 		
 		<div id="mainbox">
 			<img src="randomegglogo.png" width="280px" id="logo"/>
 			<div class="button" onclick="randomize()">Randomize</div>
-			<div class="button" id="redirectButton" onclick="redirect()">Go!</div>
+			<a id="linker" href="#"><div class="button" id="redirectButton" onclick="redirect()">Go!</div></a>
 			<textarea spellcheck="false" id="receiveBacon" placeholder="Receive URL here" onfocus="this.select()" onMouseUp="return false" ></textarea>
 		</div>
 	</body>
