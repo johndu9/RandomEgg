@@ -1,0 +1,61 @@
+body {
+	background-color: #F0EADB;
+}
+
+#mainbox{
+	background-color: rgb(51,66,90);
+	border-radius: 15px;
+	box-shadow: 4px 4px 5px 0px rgba(0,0,0,.5);
+	width: 700px;
+	height: 280px;
+	margin: 0px auto;
+	margin-top: 100px;
+}
+
+#logo{
+	margin-top: -80px;
+}
+
+#receiveBacon {
+	margin-left: 50px;
+	margin-top: 20px;
+	text-align: center;
+	color: rgba(0,0,0,.3);
+	width: 600px;
+	height: 18px;
+}
+
+.button {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	text-align: center;
+	font-family: arial, helvetica, verdana, sans-serif;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 22px;
+	width: 180px;
+	height: 45px;
+	padding-top: 18px;
+	border-radius: 5px;
+	background-color: orange;
+	border: solid 3px gold;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, rgb(255, 200, 66)), to(rgb(244, 135, 23)));
+	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
+}
+
+.button:hover{
+	background-image:-webkit-gradient(linear,left top,left bottom,color-stop(.10, #f48717),color-stop(1, #ffc842));
+	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
+}
+
+.button:active{
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, gold), to(gold));
+	background: -moz-linear-gradient(center top,gold 10%,gold 100%);
+}
+
+#redirectButton {
+	width: 100px;
+	height: 30px;
+	padding-top: 5px;
+}
