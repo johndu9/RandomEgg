@@ -8,9 +8,6 @@ import java.util.List;
  */
 public class Culler{
 	
-	/** The index where the URL begins because we like to cheese. */
-	public static final int URL_BEGIN = 28;
-	
 	/**
 	 * This is where we cull the repeat lines from a list.
 	 * @param list List to cull
@@ -62,6 +59,38 @@ public class Culler{
 	 * @return The illustrious URL
 	 */
 	public static String pullURL(String line) {
-		return line.substring(URL_BEGIN, line.length() - 1);
+		String[] parts = line.split("\"");
+		for (String part : parts) {
+			if (part.contains("http://")) {
+				return part;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Culls everything in a list except for delicious URL Strings
+	 * @param list List to cull
+	 * @return The delicious URL Strings
+	 */
+	public static List<String> pullURL(List<String> list) {
+		List<String> newList = new LinkedList<String>();
+		for (String line : list) {
+			newList.add(pullURL(line));
+		}
+		return newList;
+	}
+	
+	/**
+	 * Culls the javascript stuff in the URL
+	 * @param list List of URL Strings
+	 * @return Javascript-less URL Strings
+	 */
+	public static List<String> cullJS(List<String> list) {
+		List<String> newList = new LinkedList<String>();
+		for (String line : list) {
+			newList.add(line.split("\\?")[0]);
+		}
+		return newList;
 	}
 }

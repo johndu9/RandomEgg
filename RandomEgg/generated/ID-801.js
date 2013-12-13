@@ -1,0 +1,17 @@
+var products = [
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6428",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA02D0FD2580",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6433",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA02D0S30502",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6246",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6366",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6460",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6376",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6413",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6248",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6369",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6400",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA02D0S30499",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6647",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA20W0NE6384",
+	"http://www.newegg.com/Product/Product.aspx?Item=9SIA25V0YW5541"];
