@@ -1,5 +1,17 @@
 body {
 	background-color: #F0EADB;
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#contentWrapper {
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+	background-color: black;
 }
 
 #mainbox{
@@ -23,6 +35,7 @@ body {
 	color: rgba(0,0,0,.3);
 	width: 600px;
 	height: 18px;
+	resize: none;
 }
 
 .button {
@@ -40,6 +53,7 @@ body {
 	border-radius: 5px;
 	background-color: orange;
 	border: solid 3px gold;
+	color: black;
 	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, rgb(255, 200, 66)), to(rgb(244, 135, 23)));
 	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
 }
@@ -63,4 +77,22 @@ body {
 a {
 	text-decoration: none;
 	color: inherit;
+}
+
+#foot {
+	display: inline-block;
+	background-color: rgb(51,66,90);
+	position: absolute;
+	bottom: 0px;
+	color: white;
+	padding: 5px;
+	width: 80px;
+	border-top-right-radius: 10px;
+	transition: width 1s;
+	text-align: center;
+	font-family: Arial;
+}
+
+#foot:hover{
+width: 120px;
 }

@@ -3,8 +3,11 @@
 	<head>
 		<title>Newegg Randomizer!</title>
 		<link rel="stylesheet" type="text/css" href="css.css">
-		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="~/www/favicon.ico">
 		<script src="RandomEgg/Categories.js"></script>
+		<!--
+			Email mholm@purdue.edu with any concerns, ideas, or cease and desists that you may have. We're just cs students having fun
+		-->
 		<script>
 			function randomize() {
 				var dest = categories[Math.floor(Math.random() * categories.length)];
@@ -33,5 +36,12 @@
 			<a id="linker" href="#"><div class="button" id="redirectButton" onclick="redirect()">Go!</div></a>
 			<textarea spellcheck="false" id="receiveBacon" placeholder="Receive URL here" onfocus="this.select()" onMouseUp="return false" ></textarea>
 		</div>
+		
+		<a href="https://github.com/johndu9/RandomEgg">
+			<div id="foot">
+				Github link
+			</div>
+		</a>
+
 	</body>
 </html>
