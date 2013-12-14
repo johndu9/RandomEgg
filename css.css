@@ -4,6 +4,7 @@ body {
 	margin: 0px;
 	width: 100%;
 	height: 100%;
+	min-width: 750px;
 }
 
 #contentWrapper {
@@ -85,7 +86,7 @@ a {
 	color: inherit;
 }
 
-#foot {
+.foot {
 	display: inline-block;
 	background-color: rgb(51,66,90);
 	position: absolute;
@@ -98,8 +99,4 @@ a {
 	transition: width 1s;
 	text-align: center;
 	font-family: Arial;
-}
-
-#foot:hover{
-width: 140px;
 }
