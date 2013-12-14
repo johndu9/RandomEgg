@@ -1,8 +1,10 @@
 RandomEgg
 =========
 
-What we do is pull links for almost every single product under all categories from Newegg. The Java bits generate the lists of links, and the rest is website stuff.
+What we do is pull links for almost every single product under all categories from Newegg. The Java bits generate the lists of links, and the rest is website stuff and lots of lists.
 
-Mitch and I wrote the website bits to make it look pretty, all of which are also included in the git, so feel free to host the site if you want.
+Running the Java bits means you have to take a look at all the arguments you have to throw in. We run it for every category to populate the lists, but you don't have to.
+
+Mitch and John (mostly Mitch) wrote the website bits to make it look pretty, all of which are also included in the git, so feel free to host the site if you want.
 
 A working demo of the site is available here: www.randomegg.me
