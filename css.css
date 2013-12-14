@@ -32,7 +32,7 @@ body {
 	margin-left: 50px;
 	margin-top: 20px;
 	text-align: center;
-	color: rgba(0,0,0,.3);
+	color: rgba(0,0,0,.5);
 	width: 600px;
 	height: 18px;
 	resize: none;
@@ -42,6 +42,12 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 20px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	text-align: center;
 	font-family: arial, helvetica, verdana, sans-serif;
 	cursor: pointer;
@@ -85,8 +91,9 @@ a {
 	position: absolute;
 	bottom: 0px;
 	color: white;
+	font-weight: bold;
 	padding: 5px;
-	width: 80px;
+	width: 100px;
 	border-top-right-radius: 10px;
 	transition: width 1s;
 	text-align: center;
@@ -94,5 +101,5 @@ a {
 }
 
 #foot:hover{
-width: 120px;
+width: 140px;
 }

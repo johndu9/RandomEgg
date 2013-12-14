@@ -4,19 +4,36 @@
 		<title>Newegg Randomizer!</title>
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<link rel="shortcut icon" type="image/x-icon" href="~/www/favicon.ico">
-		<script src="RandomEgg/Categories.js"></script>
+		<script src="jquery-2.0.3.min.js"></script>
+		<script src="RandomEgg/generated/Categories.js"></script>
 		<!--
 			Email mholm@purdue.edu with any concerns, ideas, or cease and desists that you may have. We're just cs students having fun
 		-->
 		<script>
-			function randomize() {
-				var dest = categories[Math.floor(Math.random() * categories.length)];
-				document.getElementById('receiveBacon').innerHTML = dest;
-				document.getElementById('linker').href = dest;
+		var productos;
+
+			function whenLoading(){
+				randomize();
+				sleep(500)
+				randomize();
 			}
 
-			function randomize2() {
-				document.getElementById('linker').href = categories[Math.floor(Math.random() * categories.length)];
+			function randomize() {
+				var dest = categories[Math.floor(Math.random() * categories.length)];
+				loadScript('RandomEgg/generated/' + dest.substring(dest.indexOf('ID-'), dest.length) + '.js');
+				sleep(500);
+				var prod = products[Math.floor(Math.random() * products.length)];
+				document.getElementById('receiveBacon').innerHTML = prod;
+				document.getElementById('linker').href = prod;
+			}
+
+			function sleep(milliseconds) {
+			  var start = new Date().getTime();
+			  for (var i = 0; i < 1e7; i++) {
+			    if ((new Date().getTime() - start) > milliseconds){
+			      break;
+			    }
+			  }
 			}
 
 			function redirect() {
@@ -26,14 +43,26 @@
 				var dest = document.getElementById('receiveBacon').innerHTML;
 				window.location.href=dest;
 			}
+
+			function loadScript(url)
+			{
+			    // Adding the script tag to the head as suggested before
+			    var head = document.getElementsByTagName('head')[0];
+			    var script = document.createElement('script');
+			    script.type = 'text/javascript';
+			    script.src = url;
+			    // Fire the loading
+			    head.appendChild(script);
+			    
+			}
 		</script>
 	</head>
-	<body onload="randomize2()">
+	<body onload="whenLoading()">
 		
 		<div id="mainbox">
 			<img src="randomegglogo.png" width="280px" id="logo"/>
 			<div class="button" onclick="randomize()">Randomize</div>
-			<a id="linker" href="#"><div class="button" id="redirectButton" onclick="redirect()">Go!</div></a>
+			<a id="linker" href="#"><div class="button"  style="display: inline-block; margin-left: 297px;" id="redirectButton" mouseup="redirect()">Go!</div></a>
 			<textarea spellcheck="false" id="receiveBacon" placeholder="Receive URL here" onfocus="this.select()" onMouseUp="return false" ></textarea>
 		</div>
 		
