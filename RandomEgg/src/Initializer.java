@@ -16,40 +16,106 @@ import java.util.Scanner;
 public class Initializer {
 	
 	/** Site we grab categories from, in this case, Newegg's site map */
-	public static final String SITE = "http://www.newegg.com/Info/SiteMap.aspx";
+	private static final String SITE = "http://www.newegg.com/Info/SiteMap.aspx";
 	/** Category file thing */
-	public static final String CATEGORY_FILE = "Categories";
+	private static final String CATEGORY_FILE = "Categories";
 	/** What we're looking for when we want categories */
-	public static final String[] CATEGORY_EXCEPTIONS = new String[]{"nolone", "SubCategory"};
+	private static final String[] CATEGORY_EXCEPTIONS = new String[]{"nolone", "SubCategory"};
 	/** What we're looking for when we want products */
-	public static final String[] PRODUCT_EXCEPTIONS = new String[]{"View Details", "Product"};
+	private static final String[] PRODUCT_EXCEPTIONS = new String[]{"View Details", "Product"};
 	/** What we're looking for when we want product counts in a category */
-	public static final String[] PRODUCT_COUNT_EXCEPTIONS = new String[]{"recordCount", "Products"};
+	private static final String[] PRODUCT_COUNT_EXCEPTIONS = new String[]{"recordCount", "Products"};
 	/** Name of the category array in the javascript */
-	public static final String CATEGORY_ARRAY_NAME = "categories";
+	private static final String CATEGORY_ARRAY_NAME = "categories";
 	/** Name of the product array in the javascript */
-	public static final String PRODUCT_ARRAY_NAME = "products";
+	private static final String PRODUCT_ARRAY_NAME = "products";
 	/** This is where we want to store our files */
 	public static final String SUBFOLDER = "generated/";
 	/** Part of the category page URL that contains the ID thing */
-	public static final int ID_INDEX = 5;
+	private static final int ID_INDEX = 5;
+	
+	/** Index where we start */
+	private int startCount;
+	/** Index where we end */
+	private int endCount;
+	/** Items we want to grab per page */
+	private int itemsPerPage;
+	/** Pages we want to grab */
+	private int maxPages;
+	/** Whether we're given a category to parse */
+	private boolean givenCategory = false;
+	/** Given category to parse */
+	private String desiredCategory;
+	/** List of categories */
+	private List<String> categories = null;
 	
 	/**
-	 * @param args 0 is where we start, 1 is where we end, 2 is items per page, 3 is max pages
+	 * Constructor, just some arguments for our initialization, used if we want some categories
+	 * @param startCount Index where we start
+	 * @param endCount Index where we end
+	 * @param itemsPerPage Items we want to grab per page
+	 * @param maxPages Pages we want to grab
 	 */
-	public static void main(String[] args) {
+	public Initializer(int startCount, int endCount, int itemsPerPage, int maxPages) {
+		this.startCount = startCount;
+		this.endCount = endCount;
+		this.itemsPerPage = itemsPerPage;
+		this.maxPages = maxPages;
+	}
+	
+	/**
+	 * Constructor, just some arguments for our initialization, used if we want all categories
+	 * @param itemsPerPage Items we want to grab per page
+	 * @param maxPages Pages we want to grab
+	 */
+	public Initializer(int itemsPerPage, int maxPages) {
+		this(0, -1, itemsPerPage, maxPages);
+	}
+	
+	/**
+	 * Constructor, just some arguments for our initialization, used if we want one category
+	 * @param desiredCategory Given category to parse
+	 * @param itemsPerPage Items we want to grab per page
+	 * @param maxPages Pages we want to grab
+	 */
+	public Initializer(String desiredCategory, int itemsPerPage, int maxPages) {
+		this(0, -1, itemsPerPage, maxPages);
+		givenCategory = true;
+		this.desiredCategory = desiredCategory;
+	}
+	
+	/**
+	 * Use in case we actually don't want to generate our categories list
+	 * @param categories List of categories
+	 */
+	public void setCategories(List<String> categories) {
+		this.categories = categories;
+	}
+	
+	/**
+	 * Initializes and writes lists based on all the variables we gave to the initializer
+	 */
+	public void init() {
 		long startTime = System.currentTimeMillis();
-		int startCount = Integer.parseInt(args[0]);
-		int endCount = Integer.parseInt(args[1]);
-		int itemsPerPage = Integer.parseInt(args[2]);
-		int maxPages = Integer.parseInt(args[3]);
 		try {
-			List<String> categories =
-				Culler.cullJS(Culler.pullURL(Culler.cullRepeats(pullSite(SITE, CATEGORY_EXCEPTIONS))));
-			writeToFile(categories, SUBFOLDER + CATEGORY_FILE + ".js", CATEGORY_ARRAY_NAME);
+			List<String> categories = null;
+			if (this.categories == null) {
+				categories = Culler.cullJS(Culler.pullURL(Culler.cullRepeats(pullSite(SITE, CATEGORY_EXCEPTIONS))));
+				writeToFile(categories, SUBFOLDER + CATEGORY_FILE + ".txt");
+				writeToFile(categories, SUBFOLDER + CATEGORY_FILE + ".js", CATEGORY_ARRAY_NAME);
+			} else {
+				categories = this.categories;
+			}
 			int count = startCount;
 			for (String category : categories) {
-				if(categories.indexOf(category) < startCount){
+				if (givenCategory) {
+					if (desiredCategory.equals(getCategoryID(category))) {
+						endCount = categories.indexOf(category);
+					} else {
+						continue;
+					}
+				}
+				if (categories.indexOf(category) < startCount) {
 					continue;
 				}
 				if (endCount != -1 && categories.indexOf(category) > endCount) {
@@ -76,7 +142,7 @@ public class Initializer {
 	 * @return All products from a category
 	 * @throws IOException
 	 */
-	private static List<String> getProducts(String categoryPage, int itemsPerPage, int maxPages) throws IOException {
+	private List<String> getProducts(String categoryPage, int itemsPerPage, int maxPages) throws IOException {
 		List<String> productPageLines = pullSite(categoryPage + getPageSuffix(1, itemsPerPage));
 		List<String> productCountList = Culler.cullAllExcept(productPageLines, PRODUCT_COUNT_EXCEPTIONS);
 		if (productCountList.isEmpty()) {
@@ -113,7 +179,7 @@ public class Initializer {
 	 * @return List of every line from the url's file except the exceptions
 	 * @throws IOException
 	 */
-	private static List<String> pullSite(String url, String[] exceptions) throws IOException {
+	private List<String> pullSite(String url, String[] exceptions) throws IOException {
 		List<String> lines = new LinkedList<String>();
 		BufferedReader reader = null;
 		reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
@@ -141,7 +207,7 @@ public class Initializer {
 	 * @return List of every line from the url's file except the exception
 	 * @throws IOException
 	 */
-	private static List<String> pullSite(String url, String exception) throws IOException {
+	private List<String> pullSite(String url, String exception) throws IOException {
 		return pullSite(url, new String[]{exception});
 	}
 
@@ -151,7 +217,7 @@ public class Initializer {
 	 * @return List of every line from the url's file
 	 * @throws IOException
 	 */
-	private static List<String> pullSite(String url) throws IOException {
+	private List<String> pullSite(String url) throws IOException {
 		return pullSite(url, "");
 	}
 
@@ -161,7 +227,7 @@ public class Initializer {
 	 * @param path Target, wherever we want to write our file
 	 * @throws IOException
 	 */
-	private static void writeToFile(List<String> list, String path) throws IOException {
+	private void writeToFile(List<String> list, String path) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		for (String line : list) {
 			builder.append(line + "\n");
@@ -176,7 +242,7 @@ public class Initializer {
 	 * @param arrayName Name of the javascript's array
 	 * @throws IOException
 	 */
-	private static void writeToFile(List<String> list, String path, String arrayName) throws IOException{
+	private void writeToFile(List<String> list, String path, String arrayName) throws IOException{
 		StringBuilder builder = new StringBuilder();
 		builder.append("var " + arrayName + " = [\n");
 		Iterator<String> iterator = list.iterator();
@@ -193,7 +259,7 @@ public class Initializer {
 	 * @param path Target, wherever we want to write our file
 	 * @throws IOException
 	 */
-	private static void writeToFile(String content, String path) throws IOException {
+	private void writeToFile(String content, String path) throws IOException {
 		Scanner reader = new Scanner(content);
 		BufferedWriter writer = new BufferedWriter(new FileWriter(path));
 		while (reader.hasNextLine()) {
