@@ -17,7 +17,7 @@ public class Main {
 	public static void main(String[] args) {
 		Initializer initializer = null;
 		List<String> categories = null;
-		if (args[0].equals("true") && new File("generated/Categories.txt").exists()) {
+		if (!Boolean.parseBoolean(args[0]) && new File("generated/Categories.txt").exists()) {
 			Scanner reader = null;
 			try {
 				reader = new Scanner(new File("generated/Categories.txt"));
