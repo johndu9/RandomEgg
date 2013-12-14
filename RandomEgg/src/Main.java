@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,16 +12,34 @@ import java.util.Scanner;
  * 	{boolean force generate categories, int start index, int end index, int items per page, int max pages}
  * 	{boolean force generate categories, String category name, int items per page, int max pages}
  * 	{boolean force generate categories, int items per page, int max pages}
+ *  {} no args just generates the category files
  * @author John Du
  */
 public class Main {
 	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+		System.out.print("Running with args: ");
+		for (String arg : args) {
+			System.out.print(arg + " ");
+		}
+		System.out.println();
 		Initializer initializer = null;
 		List<String> categories = null;
-		if (!Boolean.parseBoolean(args[0]) && new File("generated/Categories.txt").exists()) {
+		if (args.length == 0) {
+			initializer = new Initializer(0, 0);
+			try {
+				initializer.getCategories();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			printEndTime(startTime);
+			return;
+		}
+		File categoriesFile = new File(Initializer.SUBFOLDER + Initializer.CATEGORY_FILE_NAME + ".txt");
+		if (!Boolean.parseBoolean(args[0]) && categoriesFile.exists()) {
 			Scanner reader = null;
 			try {
-				reader = new Scanner(new File("generated/Categories.txt"));
+				reader = new Scanner(categoriesFile);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -28,6 +47,7 @@ public class Main {
 			while (reader.hasNext()) {
 				categories.add(reader.next());
 			}
+			reader.close();
 		}
 		if (args.length == 5) {
 			initializer = new Initializer(
@@ -46,5 +66,10 @@ public class Main {
 			initializer.setCategories(categories);
 		}
 		initializer.init();
+		printEndTime(startTime);
+	}
+	
+	private static void printEndTime(long startTime) {
+		System.out.println("Run time: " + (double)(System.currentTimeMillis() - startTime) / 1000.0 + " seconds");
 	}
 }

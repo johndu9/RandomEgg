@@ -17,8 +17,10 @@ public class Initializer {
 	
 	/** Site we grab categories from, in this case, Newegg's site map */
 	private static final String SITE = "http://www.newegg.com/Info/SiteMap.aspx";
+	/** This is where we want to store our files */
+	public static final String SUBFOLDER = "generated/";
 	/** Category file thing */
-	private static final String CATEGORY_FILE = "Categories";
+	public static final String CATEGORY_FILE_NAME = "Categories";
 	/** What we're looking for when we want categories */
 	private static final String[] CATEGORY_EXCEPTIONS = new String[]{"nolone", "SubCategory"};
 	/** What we're looking for when we want products */
@@ -29,8 +31,6 @@ public class Initializer {
 	private static final String CATEGORY_ARRAY_NAME = "categories";
 	/** Name of the product array in the javascript */
 	private static final String PRODUCT_ARRAY_NAME = "products";
-	/** This is where we want to store our files */
-	public static final String SUBFOLDER = "generated/";
 	/** Part of the category page URL that contains the ID thing */
 	private static final int ID_INDEX = 5;
 	
@@ -59,8 +59,9 @@ public class Initializer {
 	public Initializer(int startCount, int endCount, int itemsPerPage, int maxPages) {
 		this.startCount = startCount;
 		this.endCount = endCount;
-		this.itemsPerPage = itemsPerPage;
-		this.maxPages = maxPages;
+		//Newegg has a 100 item and page limit
+		this.itemsPerPage = (Math.abs(itemsPerPage) > 100) ? (100) : (Math.abs(itemsPerPage));
+		this.maxPages = (Math.abs(maxPages) > 100) ? (100) : (Math.abs(maxPages));
 	}
 	
 	/**
@@ -93,57 +94,68 @@ public class Initializer {
 	}
 	
 	/**
+	 * If this.categories is null, then we make our own categories and write it everywhere
+	 * @return The categories and stuff
+	 * @throws IOException
+	 */
+	public List<String> getCategories() throws IOException {
+		List<String> categories = null;
+		if (this.categories == null) {
+			System.out.println("Pulling categories");
+			categories = Culler.cullJS(Culler.pullURL(Culler.cullRepeats(pullSite(SITE, CATEGORY_EXCEPTIONS))));
+			writeToFile(categories, SUBFOLDER + CATEGORY_FILE_NAME + ".txt");
+			writeToFile(categories, SUBFOLDER + CATEGORY_FILE_NAME + ".js", CATEGORY_ARRAY_NAME);
+			setCategories(categories);
+			System.out.println("Finished pulling categories");
+		} else {
+			categories = this.categories;
+		}
+		return categories;
+	}
+	
+	/**
 	 * Initializes and writes lists based on all the variables we gave to the initializer
 	 */
 	public void init() {
-		long startTime = System.currentTimeMillis();
 		try {
-			List<String> categories = null;
-			if (this.categories == null) {
-				categories = Culler.cullJS(Culler.pullURL(Culler.cullRepeats(pullSite(SITE, CATEGORY_EXCEPTIONS))));
-				writeToFile(categories, SUBFOLDER + CATEGORY_FILE + ".txt");
-				writeToFile(categories, SUBFOLDER + CATEGORY_FILE + ".js", CATEGORY_ARRAY_NAME);
-			} else {
-				categories = this.categories;
-			}
-			int count = startCount;
+			List<String> categories = getCategories();
 			for (String category : categories) {
+				int index = categories.indexOf(category);
 				if (givenCategory) {
 					if (desiredCategory.equals(getCategoryID(category))) {
-						endCount = categories.indexOf(category);
+						endCount = index;
 					} else {
 						continue;
 					}
 				}
-				if (categories.indexOf(category) < startCount) {
+				if (index < startCount) {
 					continue;
 				}
-				if (endCount != -1 && categories.indexOf(category) > endCount) {
+				if (endCount != -1 && index > endCount) {
 					break;
 				}
-				System.out.println("Begin " + getCategoryID(category));
 				List<String> products = getProducts(category, itemsPerPage, maxPages);
 				if (!products.isEmpty()) {
 					writeToFile(products, SUBFOLDER + getCategoryID(category) + ".js", PRODUCT_ARRAY_NAME);
 				} else {
 					System.err.println("Broken link!");
 				}
-				System.out.println(++count + "/" + categories.size() + " categories done");
+				System.out.println("Category " + index + "/" + categories.size() + " done");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Time to initialize: " + (double)(System.currentTimeMillis() - startTime) / 1000.0);
 	}
 	
 	/**
 	 * Pulls every single product from a category and throws them into a big list
-	 * @param categoryPage Category page that we want products from
+	 * @param category Category page that we want products from
 	 * @return All products from a category
 	 * @throws IOException
 	 */
-	private List<String> getProducts(String categoryPage, int itemsPerPage, int maxPages) throws IOException {
-		List<String> productPageLines = pullSite(categoryPage + getPageSuffix(1, itemsPerPage));
+	private List<String> getProducts(String category, int itemsPerPage, int maxPages) throws IOException {
+		System.out.println("Begin " + getCategoryID(category));
+		List<String> productPageLines = pullSite(category + getPageSuffix(1, itemsPerPage));
 		List<String> productCountList = Culler.cullAllExcept(productPageLines, PRODUCT_COUNT_EXCEPTIONS);
 		if (productCountList.isEmpty()) {
 			return productCountList;
@@ -158,17 +170,16 @@ public class Initializer {
 			}
 		}
 		int pageCount = (productCount >= itemsPerPage * maxPages) ? (maxPages) : (productCount / itemsPerPage);
-		System.out.println(getCategoryID(categoryPage) + ":" + productCount + " products on " + pageCount + " pages");
+		System.out.println(getCategoryID(category) + ": " + productCount + " products on " + pageCount + " pages");
 		List<String> productList =
 			Culler.cullRepeats(Culler.pullURL(Culler.cullAllExcept(productPageLines, PRODUCT_EXCEPTIONS)));
-		for (int i = 1; i < pageCount + 1; i++) {
-			List<String> productsOnPage = 
-				Culler.pullURL(
-					Culler.cullAllExcept(pullSite(categoryPage + getPageSuffix(i + 1, itemsPerPage)), PRODUCT_EXCEPTIONS));
+		for (int i = 1; i < pageCount; i++) {
+			List<String> productsOnPage = Culler.pullURL(
+				Culler.cullAllExcept(pullSite(category + getPageSuffix(i + 1, itemsPerPage)), PRODUCT_EXCEPTIONS));
 			productList.addAll(productsOnPage);
 		}
 		productList = Culler.cullRepeats(productList);
-		System.out.println("Finished " + getCategoryID(categoryPage));
+		System.out.println("Finish " + getCategoryID(category));
 		return productList;
 	}
 
@@ -180,6 +191,11 @@ public class Initializer {
 	 * @throws IOException
 	 */
 	private List<String> pullSite(String url, String[] exceptions) throws IOException {
+		System.out.print("Pulling from \"" + url + "\" with exceptions: ");
+		for (String exception : exceptions) {
+			System.out.print(exception + " ");
+		}
+		System.out.println();
 		List<String> lines = new LinkedList<String>();
 		BufferedReader reader = null;
 		reader = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
@@ -260,6 +276,7 @@ public class Initializer {
 	 * @throws IOException
 	 */
 	private void writeToFile(String content, String path) throws IOException {
+		System.out.println("Writing content to " + path);
 		Scanner reader = new Scanner(content);
 		BufferedWriter writer = new BufferedWriter(new FileWriter(path));
 		while (reader.hasNextLine()) {
