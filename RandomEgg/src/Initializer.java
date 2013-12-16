@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,6 +63,10 @@ public class Initializer {
 		//Newegg has a 100 item and page limit
 		this.itemsPerPage = (Math.abs(itemsPerPage) > 100) ? (100) : (Math.abs(itemsPerPage));
 		this.maxPages = (Math.abs(maxPages) > 100) ? (100) : (Math.abs(maxPages));
+		File subfolder = new File(SUBFOLDER);
+		if (!subfolder.exists()) {
+			subfolder.mkdir();
+		}
 	}
 	
 	/**
