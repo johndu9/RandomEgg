@@ -4,7 +4,9 @@
 		<title>Newegg Randomizer!</title>
 		<link rel="stylesheet" type="text/css" href="css.css">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-		<script src="snowstorm-min.js"></script>
+		<!--
+			<script src="snowstorm-min.js"></script>
+		-->
 		<script src="RandomEgg/generated/Categories.js"></script>
 		<!--
 -			Email mholm@purdue.edu with any concerns, ideas, or cease and desists that you may have. We're just cs students having fun please don't kill us.
@@ -63,7 +65,7 @@
 			function randomRigButton() {
 				randomProg = 0;
 				inProgress = true;
-				rand = Math.floor(Math.random() * 8);
+				rand = -1;//Math.floor(Math.random() * 8);
 				randomRig();
 			}
 
@@ -250,21 +252,9 @@
 		<input id="ram" class="partBox" placeholder="RAM"/>
 
 		</div>
-		
-		<a href="https://github.com/johndu9/RandomEgg">
-			<div class="foot">
-				Github link
-			</div>
-		</a>
-
-		<a href="mailto:mholm@purdue.edu">
-			<div class="foot" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 0px; right: 0px;">
-				Email Us
-			</div>
-		</a>
 
 		<div id="disclaimer">		
-		We do not own the Newegg logo, Newegg visual style, or the Newegg website. We have no affiliation to Newegg in any way, simply bored cs students. If you have an issue with the site, contact <a href="mailto:mholm@purdue.edu" style="text-decoration: underline;">Mitch</a>
+		We do not own the Newegg logo, Newegg visual style, or the Newegg website. We have no affiliation to Newegg in any way, simply bored CS students. Link to the GitHub is <a href="https://github.com/johndu9/RandomEgg" style="text-decoration: underline;">here</a>. If you have an issue with the site, contact <a href="mailto:mholm@purdue.edu" style="text-decoration: underline;">Mitch</a>.
 		</div>
 	</body>
 </html>
