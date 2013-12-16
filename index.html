@@ -3,28 +3,188 @@
 	<head>
 		<title>Newegg Randomizer!</title>
 		<link rel="stylesheet" type="text/css" href="css.css">
-		<link rel="shortcut icon" type="image/x-icon" href="~/www/favicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 		<script src="snowstorm-min.js"></script>
 		<script src="RandomEgg/generated/Categories.js"></script>
 		<!--
 -			Email mholm@purdue.edu with any concerns, ideas, or cease and desists that you may have. We're just cs students having fun please don't kill us.
 		-->
 		<script>
-		var productos;
+		var prod = 'fish';
+		var randomProg = 0;
+		var gBox = 'receiveBacon';
+		var gLink = 'linker';
+		var inProgress = false;
+		var rand = Math.floor(Math.random() * 8);
 
-			function whenLoading(){
-				randomize();
-				sleep(500)
-				randomize();
+		var cddJS = ["RandomEgg/generated/ID-600.js","RandomEgg/generated/ID-598.js",
+					"RandomEgg/generated/ID-5.js","RandomEgg/generated/ID-55.js"];
+		var caseJS = ["RandomEgg/generated/ID-7.js","RandomEgg/generated/ID-690.js",
+					 "RandomEgg/generated/ID-412.js"];
+		var moboJS = ["RandomEgg/generated/ID-22.js","RandomEgg/generated/ID-280.js"];
+		var hddJS = ["RandomEgg/generated/ID-14.js","RandomEgg/generated/ID-380.js",
+					"RandomEgg/generated/ID-636.js","RandomEgg/generated/ID-2021.js",
+					"RandomEgg/generated/ID-522.js"];
+		var gpuJS = ["RandomEgg/generated/ID-48.js", "RandomEgg/generated/ID-449.js"];
+		var psuJS = ["RandomEgg/generated/ID-58.js","RandomEgg/generated/ID-520.js"];
+		var ramJS = ["RandomEgg/generated/ID-147.js","RandomEgg/generated/ID-381.js",
+					"RandomEgg/generated/ID-551.js","RandomEgg/generated/ID-541.js"];
+		var cpuJS = ["RandomEgg/generated/ID-343.js", "RandomEgg/generated/ID-727.js",
+					"RandomEgg/generated/ID-759.js"];
+
+		var parts = ["case","cdd", "gpu", "mobo", "cpu", "hdd", "psu", "ram"];
+
+			function linkUp(){
+				document.getElementById(gBox).placeholder = prod;
+				document.getElementById(gLink).href = prod;
 			}
 
-			function randomize() {
+			function randomize(box, link) {
 				var dest = categories[Math.floor(Math.random() * categories.length)];
-				loadScript('RandomEgg/generated/' + dest.substring(dest.indexOf('ID-'), dest.length) + '.js');
-				sleep(500);
-				var prod = products[Math.floor(Math.random() * products.length)];
-				document.getElementById('receiveBacon').innerHTML = prod;
-				document.getElementById('linker').href = prod;
+				loadJS('RandomEgg/generated/' + dest.substring(dest.indexOf('/ID-'), dest.length) + '.js');
+				gLink=link;
+				gBox = box;
+				doTimeOut();
+			}
+
+			function setProdnLink() {
+				prod = products[Math.floor(Math.random() * products.length)];
+				linkUp();
+				if(inProgress){
+					randomRig();
+				}
+			}
+
+			function doTimeOut() {
+				setTimeout(function() {setProdnLink()} ,500);
+				sleep(50);
+			}
+
+			function randomRigButton() {
+				randomProg = 0;
+				inProgress = true;
+				rand = Math.floor(Math.random() * 8);
+				randomRig();
+			}
+
+			function randomRig(){
+				switch (randomProg) {
+					case 0:
+						if (rand == 0){ randomize('case','caselink');} 
+						else {randomizeSp('case','caselink');}
+						randomProg++;
+						break;
+					case 3:
+						if (rand == 1){ 
+							randomize('mobo','mobolink');
+						} 
+						else {
+							randomizeSp('mobo','mobolink');
+						}
+						randomProg++;
+						break;
+					case 4:
+						if (rand == 2){ 
+							randomize('cpu','cpulink');
+						}   
+						else {
+							randomizeSp('cpu','cpulink');
+						}
+						randomProg++;
+						break;
+					case 1:
+						if (rand == 3){ 
+							randomize('cdd','cddlink');
+						}   
+						else {
+							randomizeSp('cdd','cddlink');
+						}
+						randomProg++;
+						break;
+					case 5:
+						if (rand == 4){ 
+							randomize('hdd','hddlink');
+						}   
+						else {
+							randomizeSp('hdd','hddlink');
+						}
+						randomProg++;
+						break;
+					case 2:
+						if (rand == 5){ 
+							randomize('gpu','gpulink');
+						}   
+						else {
+							randomizeSp('gpu','gpulink');
+						}
+						randomProg++;
+						break;
+					case 7:
+						if (rand == 6){ 
+							randomize('ram','ramlink');
+						}   
+						else {
+							randomizeSp('ram','ramlink');
+						}
+						randomProg++;
+						break;
+					case 6:
+						if (rand == 7){ 
+							randomize('psu','psulink');
+						}   
+						else {
+							randomizeSp('psu','psulink');
+						}
+						randomProg++;
+						break;
+					case 8:
+						randomProg = 0;
+						inProgress = false;
+						break;
+				}
+				
+			}
+
+			function randomizeSp(box, link) {
+				gBox = box;
+				gLink = link;
+				var dest;
+				if(box == 'case'){
+					dest = caseJS[Math.floor(Math.random() * caseJS.length)];
+				}
+				else if(box == 'mobo'){
+					dest = moboJS[Math.floor(Math.random() * moboJS.length)];
+				}
+				else if(box == 'cpu'){
+					dest = cpuJS[Math.floor(Math.random() * cpuJS.length)];
+				}
+				else if(box == 'cdd'){
+					dest = cddJS[Math.floor(Math.random() * cddJS.length)];
+				}
+				else if(box == 'hdd'){
+					dest = hddJS[Math.floor(Math.random() * hddJS.length)];
+				}
+				else if(box == 'gpu'){
+					dest = gpuJS[Math.floor(Math.random() * gpuJS.length)];
+				}
+				else if(box == 'psu'){
+					dest = psuJS[Math.floor(Math.random() * psuJS.length)];
+				}
+				else{
+					dest = ramJS[Math.floor(Math.random() * ramJS.length)];
+				}
+				loadJS(dest);
+				doTimeOut();
+			}
+
+			function loadJS(file) {
+			    // Adding the script tag to the head as suggested before
+			    var head = document.getElementsByTagName('head')[0];
+			    var script = document.createElement('script');
+			    script.type = 'text/javascript';
+			    script.src = file;
+			    // Fire the loading
+			    head.appendChild(script);
 			}
 
 			function sleep(milliseconds) {
@@ -35,35 +195,60 @@
 			    }
 			  }
 			}
-
-			function redirect() {
-				if(document.getElementById('receiveBacon').innerHTML == ""){
-					randomize();
-				}
-				var dest = document.getElementById('receiveBacon').innerHTML;
-				window.location.href=dest;
-			}
-
-			function loadScript(url)
-			{
-			    // Adding the script tag to the head as suggested before
-			    var head = document.getElementsByTagName('head')[0];
-			    var script = document.createElement('script');
-			    script.type = 'text/javascript';
-			    script.src = url;
-			    // Fire the loading
-			    head.appendChild(script);
-			    
-			}
+			
 		</script>
 	</head>
-	<body onload="whenLoading()">
+	<body onload="randomize('receiveBacon','linker')">
 		
 		<div id="mainbox">
 			<img src="randomegglogo.png" width="280px" id="logo"/>
-			<div class="button" onclick="randomize()">Randomize</div>
+			<div class="button" onclick="randomize('receiveBacon','linker')">Randomize</div>
 			<a id="linker" href="#"><div class="button"  style="display: inline-block; margin-left: 297px;" id="redirectButton" mouseup="redirect()">Go!</div></a>
 			<textarea spellcheck="false" id="receiveBacon" placeholder="Receive URL here" onfocus="this.select()" onMouseUp="return false" ></textarea>
+		</div>
+
+
+		<div id="rigBox">
+		<div id="randomRigTitle">
+			<div class="button" onclick="randomRigButton()" style="margin-bottom: 10px">Random Rig</div>
+			<div id="warning"><img style="float:left; margin: 5px;" src="warning.png" width="25" /><img style="float:right; margin: 5px;" src="warning.png" width="25" />
+			These parts will not work together unless you are <strong>EXCEEDINGLY</strong> lucky. Do not take these results seriously. It's a joke.
+			</div>
+		</div>
+		<br />
+
+		<span class="partName" onmouseup="randomizeSp('case', 'caselink')">Case</span>
+		<a id="caselink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="case" class="partBox" placeholder="Case"/>
+
+		<span class="partName" onmouseup="randomizeSp('cdd', 'cddlink')">CD Drive</span>
+		<a id="cddlink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="cdd" class="partBox" placeholder="CD/DVD Drive"/>
+
+		<span class="partName" onmouseup="randomizeSp('gpu', 'gpulink')">Video Card</span>
+		<a id="gpulink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="gpu" class="partBox" placeholder="Video Card"/>
+
+		<span class="partName" onmouseup="randomizeSp('mobo', 'mobolink')">Motherboard</span>
+		<a id="mobolink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="mobo" class="partBox" placeholder="Motherboard"/>
+
+		<span class="partName" onmouseup="randomizeSp('cpu', 'cpulink')">Processor</span>
+		<a id="cpulink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="cpu" class="partBox" placeholder="Processor"/>
+
+		<span class="partName" onmouseup="randomizeSp('hdd', 'hddlink')">Hard drive</span>
+		<a id="hddlink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="hdd" class="partBox" placeholder="Hard Drive"/>
+
+		<span class="partName" onmouseup="randomizeSp('psu', 'psulink')">Power Supply</span>
+		<a id="psulink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="psu" class="partBox" placeholder="Power Supply"/>
+
+		<span class="partName" onmouseup="randomizeSp('ram', 'ramlink')">RAM</span>
+		<a id="ramlink"><span class="go"><img src="web.png" width="20"/></span></a>
+		<input id="ram" class="partBox" placeholder="RAM"/>
+
 		</div>
 		
 		<a href="https://github.com/johndu9/RandomEgg">
@@ -71,10 +256,15 @@
 				Github link
 			</div>
 		</a>
-			<div class="foot" style="border-top-left-radius: 10px; right: 0px; width: 600px; font-weight: normal;">
-				We do not own the Newegg logo, Newegg visual style, or the Newegg website. We have no affiliation to Newegg in any way, simply bored cs students. If you have an issue with the site, contact <a href="mailto:mholm@purdue.edu" style="text-decoration: underline;">Mitch</a>
-			</div>
-		
 
+		<a href="mailto:mholm@purdue.edu">
+			<div class="foot" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 0px; right: 0px;">
+				Email Us
+			</div>
+		</a>
+
+		<div id="disclaimer">		
+		We do not own the Newegg logo, Newegg visual style, or the Newegg website. We have no affiliation to Newegg in any way, simply bored cs students. If you have an issue with the site, contact <a href="mailto:mholm@purdue.edu" style="text-decoration: underline;">Mitch</a>
+		</div>
 	</body>
 </html>

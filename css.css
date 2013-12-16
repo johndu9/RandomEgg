@@ -1,3 +1,9 @@
+* {
+	transition: width .25s, height .25s, margin .25s, padding .25s;
+	-webkit-transition: width .25s, height .25s, margin .25s, padding .25s;
+	-moz-transition: width .25s, height .25s, margin .25s, padding .25s;
+}
+
 body {
 	background-color: #F0EADB;
 	padding: 0px;
@@ -18,15 +24,89 @@ body {
 #mainbox{
 	background-color: rgb(51,66,90);
 	border-radius: 15px;
-	box-shadow: 4px 4px 5px 0px rgba(0,0,0,.5);
+	box-shadow: 4px 4px 5px 2px rgba(0,0,0,.5);
 	width: 700px;
 	height: 280px;
 	margin: 0px auto;
 	margin-top: 100px;
 }
 
+#rigBox {
+	background-color: rgb(51,66,90);
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	box-shadow: 5px 5px 5px 0px rgba(0,0,0,.5),inset 0px 7px 5px 0px rgba(0,0,0,.3);
+	width: 550px;
+	height: auto;
+	padding: 10px;
+	margin: 0px auto;
+	z-index: 90;
+	margin-bottom: 50px;
+}
+ 
+#randomRigTitle {
+	height: 100px;
+	width: 100%;
+	font-size: 25px;
+	text-align: center;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#warning {
+color: red;
+font-size: 14px;
+font-family: Helvetica, Arial, sans-serif;
+border-radius:5px;
+border: 1px solid red;
+height: 35px
+margin-bottom: 10px;
+}
+
 #logo{
 	margin-top: -80px;
+}
+
+.partName {
+	display: inline-block;
+	font-family: Helvetica, Arial, sans-serif;
+	width: 120px;
+	margin: 5px 0px -5px;
+	text-align: center;
+	height: 15px;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, rgb(255, 200, 66)), to(rgb(244, 135, 23)));
+	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
+	border-radius: 5px 5px 0px 0px;
+	vertical-align: middle;
+	padding:5px 10px;
+	z-index:0;
+	font-weight: bold;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.partName:hover {
+	background-image:-webkit-gradient(linear,left top,left bottom,color-stop(.10, #f48717),color-stop(1, #ffc842));
+	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
+}
+
+.partName:active {
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, gold), to(gold));
+	background: -moz-linear-gradient(center top,gold 10%,gold 100%);
+}
+
+.partBox {
+	display: block;
+	height: 20px;
+	width: 99%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	text-align: center;
+	border-radius: 0px 0px 5px 5px;
+	z-index: 5;
 }
 
 #receiveBacon {
@@ -37,6 +117,41 @@ body {
 	width: 600px;
 	height: 18px;
 	resize: none;
+}
+
+#disclaimer {
+	width: 450px;
+	background-color: rgb(51,66,90);
+	box-shadow: 5px 5px 5px 0px rgba(0,0,0,.5),inset 0px 7px 5px 0px rgba(0,0,0,.3);
+	margin: -50px auto 30px auto;
+	border-radius: 0px 0px 10px 10px;
+	padding: 10px;
+	color: white;
+	font-family: Helvetica, Arial, sans-serif;
+	text-align: center;
+}
+
+.go {
+	margin-top: 4px;
+	margin-left: 381px;
+	border-radius: 5px 5px 0px 0px;
+	position: absolute;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	padding: 3px;
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, rgb(255, 200, 66)), to(rgb(244, 135, 23)));
+	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
+}
+
+.go:hover {
+	background-image:-webkit-gradient(linear,left top,left bottom,color-stop(.10, #f48717),color-stop(1, #ffc842));
+	background: -moz-linear-gradient(center top,#ffc842 10%,#f48717 100%);
+}
+
+.go:active {
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(0.1, gold), to(gold));
+	background: -moz-linear-gradient(center top,gold 10%,gold 100%);
 }
 
 .button {
@@ -89,13 +204,13 @@ a {
 .foot {
 	display: inline-block;
 	background-color: rgb(51,66,90);
-	position: absolute;
-	bottom: 0px;
+	position: fixed;
+	top: 0px;
 	color: white;
 	font-weight: bold;
 	padding: 5px;
 	width: 100px;
-	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	transition: width 1s;
 	text-align: center;
 	font-family: Arial;
