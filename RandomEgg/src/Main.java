@@ -12,6 +12,7 @@ import java.util.Scanner;
  * 	{boolean force generate categories, int start index, int end index, int items per page, int max pages}
  * 	{boolean force generate categories, String category name, int items per page, int max pages}
  * 	{boolean force generate categories, int items per page, int max pages}
+ * 	{String category name, int items per page, int max pages}
  *  {} no args just generates the category files
  * @author John Du
  */
@@ -36,7 +37,10 @@ public class Main {
 			return;
 		}
 		File categoriesFile = new File(Initializer.SUBFOLDER + Initializer.CATEGORY_FILE_NAME + ".txt");
-		if (!Boolean.parseBoolean(args[0]) && categoriesFile.exists()) {
+		if (args[0].contains("ID-")) {
+			categories = new LinkedList<String>();
+			categories.add("http://www.newegg.com/Placeholder/SubCategory/" + args[0]);
+		} else if (!Boolean.parseBoolean(args[0]) && categoriesFile.exists()) {
 			Scanner reader = null;
 			try {
 				reader = new Scanner(categoriesFile);

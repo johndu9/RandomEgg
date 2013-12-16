@@ -124,6 +124,7 @@ public class Initializer {
 	public void init() {
 		try {
 			List<String> categories = getCategories();
+			int count = 0;
 			for (String category : categories) {
 				int index = categories.indexOf(category);
 				if (givenCategory) {
@@ -141,11 +142,15 @@ public class Initializer {
 				}
 				List<String> products = getProducts(category, itemsPerPage, maxPages);
 				if (!products.isEmpty()) {
+					count++;
 					writeToFile(products, SUBFOLDER + getCategoryID(category) + ".js", PRODUCT_ARRAY_NAME);
 				} else {
 					System.err.println("Broken link!");
 				}
-				System.out.println("Category " + index + "/" + categories.size() + " done");
+				System.out.println("Category " + index + "/" + (categories.size() - 1) + " done");
+			}
+			if (count == 0) {
+				System.err.println("Could not find specified category!");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
