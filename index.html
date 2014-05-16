@@ -7,198 +7,22 @@
 		<!--
 			<script src="snowstorm-min.js"></script>
 		-->
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-51070131-1', 'randomegg.me');
+		  ga('send', 'pageview');
+
+		</script>
 		<script src="RandomEgg/generated/Categories.js"></script>
 		<!--
--			Email mholm@purdue.edu with any concerns, ideas, or cease and desists that you may have. We're just cs students having fun please don't kill us.
+-			Email manningqb18@gmail.com with any concerns, ideas, or cease and desists that you may have. We're just cs students having fun please don't kill us.
 		-->
-		<script>
-		var prod = 'fish';
-		var randomProg = 0;
-		var gBox = 'receiveBacon';
-		var gLink = 'linker';
-		var inProgress = false;
-		var rand = Math.floor(Math.random() * 8);
-
-		var cddJS = ["RandomEgg/generated/ID-600.js","RandomEgg/generated/ID-598.js",
-					"RandomEgg/generated/ID-5.js","RandomEgg/generated/ID-55.js"];
-		var caseJS = ["RandomEgg/generated/ID-7.js","RandomEgg/generated/ID-690.js",
-					 "RandomEgg/generated/ID-412.js"];
-		var moboJS = ["RandomEgg/generated/ID-22.js","RandomEgg/generated/ID-280.js"];
-		var hddJS = ["RandomEgg/generated/ID-14.js","RandomEgg/generated/ID-380.js",
-					"RandomEgg/generated/ID-636.js","RandomEgg/generated/ID-2021.js",
-					"RandomEgg/generated/ID-522.js"];
-		var gpuJS = ["RandomEgg/generated/ID-48.js", "RandomEgg/generated/ID-449.js"];
-		var psuJS = ["RandomEgg/generated/ID-58.js","RandomEgg/generated/ID-520.js"];
-		var ramJS = ["RandomEgg/generated/ID-147.js","RandomEgg/generated/ID-381.js",
-					"RandomEgg/generated/ID-551.js","RandomEgg/generated/ID-541.js"];
-		var cpuJS = ["RandomEgg/generated/ID-343.js", "RandomEgg/generated/ID-727.js",
-					"RandomEgg/generated/ID-759.js"];
-
-		var parts = ["case","cdd", "gpu", "mobo", "cpu", "hdd", "psu", "ram"];
-
-			function linkUp(){
-				document.getElementById(gBox).placeholder = prod;
-				document.getElementById(gLink).href = prod;
-			}
-
-			function randomize(box, link) {
-				var dest = categories[Math.floor(Math.random() * categories.length)];
-				loadJS('RandomEgg/generated/' + dest.substring(dest.indexOf('/ID-'), dest.length) + '.js');
-				gLink=link;
-				gBox = box;
-				doTimeOut();
-			}
-
-			function setProdnLink() {
-				prod = products[Math.floor(Math.random() * products.length)];
-				linkUp();
-				if(inProgress){
-					randomRig();
-				}
-			}
-
-			function doTimeOut() {
-				setTimeout(function() {setProdnLink()} ,500);
-				sleep(50);
-			}
-
-			function randomRigButton() {
-				randomProg = 0;
-				inProgress = true;
-				rand = -1;//Math.floor(Math.random() * 8);
-				randomRig();
-			}
-
-			function randomRig(){
-				switch (randomProg) {
-					case 0:
-						if (rand == 0){ randomize('case','caselink');} 
-						else {randomizeSp('case','caselink');}
-						randomProg++;
-						break;
-					case 3:
-						if (rand == 1){ 
-							randomize('mobo','mobolink');
-						} 
-						else {
-							randomizeSp('mobo','mobolink');
-						}
-						randomProg++;
-						break;
-					case 4:
-						if (rand == 2){ 
-							randomize('cpu','cpulink');
-						}   
-						else {
-							randomizeSp('cpu','cpulink');
-						}
-						randomProg++;
-						break;
-					case 1:
-						if (rand == 3){ 
-							randomize('cdd','cddlink');
-						}   
-						else {
-							randomizeSp('cdd','cddlink');
-						}
-						randomProg++;
-						break;
-					case 5:
-						if (rand == 4){ 
-							randomize('hdd','hddlink');
-						}   
-						else {
-							randomizeSp('hdd','hddlink');
-						}
-						randomProg++;
-						break;
-					case 2:
-						if (rand == 5){ 
-							randomize('gpu','gpulink');
-						}   
-						else {
-							randomizeSp('gpu','gpulink');
-						}
-						randomProg++;
-						break;
-					case 7:
-						if (rand == 6){ 
-							randomize('ram','ramlink');
-						}   
-						else {
-							randomizeSp('ram','ramlink');
-						}
-						randomProg++;
-						break;
-					case 6:
-						if (rand == 7){ 
-							randomize('psu','psulink');
-						}   
-						else {
-							randomizeSp('psu','psulink');
-						}
-						randomProg++;
-						break;
-					case 8:
-						randomProg = 0;
-						inProgress = false;
-						break;
-				}
-				
-			}
-
-			function randomizeSp(box, link) {
-				gBox = box;
-				gLink = link;
-				var dest;
-				if(box == 'case'){
-					dest = caseJS[Math.floor(Math.random() * caseJS.length)];
-				}
-				else if(box == 'mobo'){
-					dest = moboJS[Math.floor(Math.random() * moboJS.length)];
-				}
-				else if(box == 'cpu'){
-					dest = cpuJS[Math.floor(Math.random() * cpuJS.length)];
-				}
-				else if(box == 'cdd'){
-					dest = cddJS[Math.floor(Math.random() * cddJS.length)];
-				}
-				else if(box == 'hdd'){
-					dest = hddJS[Math.floor(Math.random() * hddJS.length)];
-				}
-				else if(box == 'gpu'){
-					dest = gpuJS[Math.floor(Math.random() * gpuJS.length)];
-				}
-				else if(box == 'psu'){
-					dest = psuJS[Math.floor(Math.random() * psuJS.length)];
-				}
-				else{
-					dest = ramJS[Math.floor(Math.random() * ramJS.length)];
-				}
-				loadJS(dest);
-				doTimeOut();
-			}
-
-			function loadJS(file) {
-			    // Adding the script tag to the head as suggested before
-			    var head = document.getElementsByTagName('head')[0];
-			    var script = document.createElement('script');
-			    script.type = 'text/javascript';
-			    script.src = file;
-			    // Fire the loading
-			    head.appendChild(script);
-			}
-
-			function sleep(milliseconds) {
-			  var start = new Date().getTime();
-			  for (var i = 0; i < 1e7; i++) {
-			    if ((new Date().getTime() - start) > milliseconds){
-			      break;
-			    }
-			  }
-			}
-			
-		</script>
+		<script src="./randomegg.js"></script>
+		
 	</head>
 	<body onload="randomize('receiveBacon','linker')">
 		
@@ -209,52 +33,62 @@
 			<textarea spellcheck="false" id="receiveBacon" placeholder="Receive URL here" onfocus="this.select()" onMouseUp="return false" ></textarea>
 		</div>
 
-
 		<div id="rigBox">
-		<div id="randomRigTitle">
-			<div class="button" onclick="randomRigButton()" style="margin-bottom: 10px">Random Rig</div>
-			<div id="warning"><img style="float:left; margin: 5px;" src="warning.png" width="25" /><img style="float:right; margin: 5px;" src="warning.png" width="25" />
-			These parts will not work together unless you are <strong>EXCEEDINGLY</strong> lucky. Do not take these results seriously. It's a joke.
+			<div id="randomRigTitle">
+				<div class="button" onclick="randomRigButton()" style="margin-bottom: 10px">Random Rig</div>
+				<div id="warning"><img style="float:left; margin: 5px;" src="warning.png" width="25" /><img style="float:right; margin: 5px;" src="warning.png" width="25" />
+				These parts will not work together unless you are <strong>EXCEEDINGLY</strong> lucky. Do not take these results seriously. It's a joke.
+				</div>
 			</div>
-		</div>
-		<br />
+			<br />
 
-		<span class="partName" onmouseup="randomizeSp('case', 'caselink')">Case</span>
-		<a id="caselink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="case" class="partBox" placeholder="Case"/>
+			<span class="partName" onmouseup="randomizeSp('case', 'caselink')">Case</span>
+			<a id="caselink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="case" class="partBox" placeholder="Case"/>
 
-		<span class="partName" onmouseup="randomizeSp('cdd', 'cddlink')">CD Drive</span>
-		<a id="cddlink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="cdd" class="partBox" placeholder="CD/DVD Drive"/>
+			<span class="partName" onmouseup="randomizeSp('cdd', 'cddlink')">CD Drive</span>
+			<a id="cddlink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="cdd" class="partBox" placeholder="CD/DVD Drive"/>
 
-		<span class="partName" onmouseup="randomizeSp('gpu', 'gpulink')">Video Card</span>
-		<a id="gpulink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="gpu" class="partBox" placeholder="Video Card"/>
+			<span class="partName" onmouseup="randomizeSp('gpu', 'gpulink')">Video Card</span>
+			<a id="gpulink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="gpu" class="partBox" placeholder="Video Card"/>
 
-		<span class="partName" onmouseup="randomizeSp('mobo', 'mobolink')">Motherboard</span>
-		<a id="mobolink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="mobo" class="partBox" placeholder="Motherboard"/>
+			<span class="partName" onmouseup="randomizeSp('mobo', 'mobolink')">Motherboard</span>
+			<a id="mobolink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="mobo" class="partBox" placeholder="Motherboard"/>
 
-		<span class="partName" onmouseup="randomizeSp('cpu', 'cpulink')">Processor</span>
-		<a id="cpulink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="cpu" class="partBox" placeholder="Processor"/>
+			<span class="partName" onmouseup="randomizeSp('cpu', 'cpulink')">Processor</span>
+			<a id="cpulink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="cpu" class="partBox" placeholder="Processor"/>
 
-		<span class="partName" onmouseup="randomizeSp('hdd', 'hddlink')">Hard drive</span>
-		<a id="hddlink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="hdd" class="partBox" placeholder="Hard Drive"/>
+			<span class="partName" onmouseup="randomizeSp('hdd', 'hddlink')">Hard drive</span>
+			<a id="hddlink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="hdd" class="partBox" placeholder="Hard Drive"/>
 
-		<span class="partName" onmouseup="randomizeSp('psu', 'psulink')">Power Supply</span>
-		<a id="psulink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="psu" class="partBox" placeholder="Power Supply"/>
+			<span class="partName" onmouseup="randomizeSp('psu', 'psulink')">Power Supply</span>
+			<a id="psulink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="psu" class="partBox" placeholder="Power Supply"/>
 
-		<span class="partName" onmouseup="randomizeSp('ram', 'ramlink')">RAM</span>
-		<a id="ramlink"><span class="go"><img src="web.png" width="20"/></span></a>
-		<input id="ram" class="partBox" placeholder="RAM"/>
-
+			<span class="partName" onmouseup="randomizeSp('ram', 'ramlink')">RAM</span>
+			<a id="ramlink"><span class="go"><img src="web.png" width="20"/></span></a>
+			<input id="ram" class="partBox" placeholder="RAM"/>
 		</div>
 
 		<div id="disclaimer">		
-		We do not own the Newegg logo, Newegg visual style, or the Newegg website. We have no affiliation to Newegg in any way, simply bored CS students. Link to the GitHub is <a href="https://github.com/johndu9/RandomEgg" style="text-decoration: underline;">here</a>. If you have an issue with the site, contact <a href="mailto:mholm@purdue.edu" style="text-decoration: underline;">Mitch</a>.
+		We do not own the Newegg logo, Newegg visual style, or the Newegg website. We have no affiliation to Newegg in any way, simply bored CS students. Link to the GitHub is <a href="https://github.com/johndu9/RandomEgg" style="text-decoration: underline;">here</a>. If you have an issue with the site, contact <a href="mailto:manningqb18@gmail.com" style="text-decoration: underline;">Mitch</a>.
+		</div>
+
+		<div id="adSpace">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<!-- Randomegg -->
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:120px;height:600px"
+			     data-ad-client="ca-pub-2215196539266709"
+			     data-ad-slot="8624978031"></ins>
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
 		</div>
 	</body>
 </html>
