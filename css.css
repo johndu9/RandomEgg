@@ -62,12 +62,19 @@ body {
 	margin-bottom: 10px;
 }
 
-#adSpace {
+#adSpace1 {
 	position: absolute;
 	left: 0px;
-	background-color: black;
 	width: 120px;
-	height: 700px;
+	height: 600px;
+	margin-top: -1000px;
+}
+
+#adSpace2 {
+	position: absolute;
+	right: 0px;
+	width: 120px;
+	height: 600px;
 	margin-top: -1000px;
 }
 
