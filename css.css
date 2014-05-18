@@ -29,6 +29,60 @@ body {
 	height: 280px;
 	margin: 0px auto;
 	margin-top: 100px;
+
+}
+
+#PreviewPane{
+	background-color: rgb(51,66,90);
+	border-bottom-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	box-shadow: 5px 5px 5px 0px rgba(0,0,0,.5),inset 0px 7px 5px 0px rgba(0,0,0,.3);
+	width: 625px;
+	height: 225px;
+	padding: 10px;
+	margin: 0px auto;
+}
+
+#ImageBox {
+	height: 225px;
+	width: 300px;
+	display: inline-block;
+	border: solid 1px black;
+	margin-right: 20px;
+	float:left;
+}
+#PreviewCost::before{
+	content: "$";
+	color: #326CA0;
+}
+#PreviewCost{
+	bottom: 0px;
+	right: 0px;
+	font-size: 24pt;
+	color: white;
+	width: 100px;
+	text-align: right;
+	display: inline-block;
+}
+
+#PreviewCategory {
+	text-align: left;
+	color: white;
+	width: 180px;
+	font-size: 15pt;
+	display: inline-block;
+	bottom: 0px;
+}
+
+#PreviewCategory::before{
+	content: "in: ";
+	color: #326CA0;
+}
+
+#PreviewName {
+	color: white;
+	height: 180px;
+	font-size: 24pt;
 }
 
 #rigBox {
@@ -149,7 +203,7 @@ body {
 
 .go {
 	margin-top: 4px;
-	margin-left: 381px;
+	margin-left: 384px;
 	border-radius: 5px 5px 0px 0px;
 	position: absolute;
 	display: inline-block;
