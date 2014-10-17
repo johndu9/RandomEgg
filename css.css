@@ -2,6 +2,7 @@
 	transition: width .25s, height .25s, margin .25s, padding .25s;
 	-webkit-transition: width .25s, height .25s, margin .25s, padding .25s;
 	-moz-transition: width .25s, height .25s, margin .25s, padding .25s;
+	font-family: Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -81,7 +82,7 @@ body {
 
 #PreviewName {
 	color: white;
-	height: 180px;
+	height: 170px;
 	font-size: 24pt;
 }
 
